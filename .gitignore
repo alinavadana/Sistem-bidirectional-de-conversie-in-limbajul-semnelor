@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+.python-version
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+
+.env
+.env.local
+
+# Backup-uri locale ale antrenamentului 
+data/backups/
+
+# Videoclipuri generate cache (se regenereaza automat)
+static/generated_signs/
+
+# Rapoarte de evaluare (regenerabile)
+eval_reports/

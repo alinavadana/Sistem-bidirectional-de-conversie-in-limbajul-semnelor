@@ -1,0 +1,463 @@
+{
+  "feat_dim": 126,
+  "train": {
+    "10": {
+      "samples": 93,
+      "sessions": 3,
+      "session_ids": [
+        0,
+        1,
+        2
+      ]
+    },
+    "bathroom": {
+      "samples": 93,
+      "sessions": 3,
+      "session_ids": [
+        0,
+        1,
+        2
+      ]
+    },
+    "beautiful": {
+      "samples": 348,
+      "sessions": 3,
+      "session_ids": [
+        0,
+        1,
+        2
+      ]
+    },
+    "can": {
+      "samples": 186,
+      "sessions": 1,
+      "session_ids": [
+        0
+      ]
+    },
+    "come": {
+      "samples": 264,
+      "sessions": 1,
+      "session_ids": [
+        0
+      ]
+    },
+    "doctor": {
+      "samples": 342,
+      "sessions": 4,
+      "session_ids": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    "drink": {
+      "samples": 243,
+      "sessions": 2,
+      "session_ids": [
+        0,
+        1
+      ]
+    },
+    "eat": {
+      "samples": 261,
+      "sessions": 1,
+      "session_ids": [
+        0
+      ]
+    },
+    "evaluate": {
+      "samples": 92,
+      "sessions": 3,
+      "session_ids": [
+        0,
+        1,
+        2
+      ]
+    },
+    "fine": {
+      "samples": 375,
+      "sessions": 1,
+      "session_ids": [
+        0
+      ]
+    },
+    "food": {
+      "samples": 348,
+      "sessions": 4,
+      "session_ids": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    "go": {
+      "samples": 244,
+      "sessions": 1,
+      "session_ids": [
+        0
+      ]
+    },
+    "have": {
+      "samples": 85,
+      "sessions": 3,
+      "session_ids": [
+        0,
+        1,
+        2
+      ]
+    },
+    "hello": {
+      "samples": 336,
+      "sessions": 11,
+      "session_ids": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    "help": {
+      "samples": 368,
+      "sessions": 2,
+      "session_ids": [
+        0,
+        1
+      ]
+    },
+    "home": {
+      "samples": 245,
+      "sessions": 1,
+      "session_ids": [
+        0
+      ]
+    },
+    "how": {
+      "samples": 465,
+      "sessions": 4,
+      "session_ids": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    "hungry": {
+      "samples": 234,
+      "sessions": 1,
+      "session_ids": [
+        0
+      ]
+    },
+    "hurt": {
+      "samples": 93,
+      "sessions": 3,
+      "session_ids": [
+        0,
+        1,
+        2
+      ]
+    },
+    "i": {
+      "samples": 389,
+      "sessions": 7,
+      "session_ids": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "laugh": {
+      "samples": 186,
+      "sessions": 6,
+      "session_ids": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "little": {
+      "samples": 61,
+      "sessions": 2,
+      "session_ids": [
+        0,
+        1
+      ]
+    },
+    "love": {
+      "samples": 208,
+      "sessions": 1,
+      "session_ids": [
+        0
+      ]
+    },
+    "mom": {
+      "samples": 218,
+      "sessions": 1,
+      "session_ids": [
+        0
+      ]
+    },
+    "my": {
+      "samples": 186,
+      "sessions": 1,
+      "session_ids": [
+        0
+      ]
+    },
+    "need": {
+      "samples": 646,
+      "sessions": 11,
+      "session_ids": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    "nervous": {
+      "samples": 62,
+      "sessions": 2,
+      "session_ids": [
+        0,
+        1
+      ]
+    },
+    "now": {
+      "samples": 341,
+      "sessions": 1,
+      "session_ids": [
+        0
+      ]
+    },
+    "out": {
+      "samples": 93,
+      "sessions": 3,
+      "session_ids": [
+        0,
+        1,
+        2
+      ]
+    },
+    "pass": {
+      "samples": 151,
+      "sessions": 5,
+      "session_ids": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "please": {
+      "samples": 249,
+      "sessions": 1,
+      "session_ids": [
+        0
+      ]
+    },
+    "say": {
+      "samples": 311,
+      "sessions": 1,
+      "session_ids": [
+        0
+      ]
+    },
+    "she": {
+      "samples": 297,
+      "sessions": 1,
+      "session_ids": [
+        0
+      ]
+    },
+    "sorry": {
+      "samples": 342,
+      "sessions": 1,
+      "session_ids": [
+        0
+      ]
+    },
+    "thank you": {
+      "samples": 374,
+      "sessions": 1,
+      "session_ids": [
+        0
+      ]
+    },
+    "this": {
+      "samples": 98,
+      "sessions": 4,
+      "session_ids": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    "to": {
+      "samples": 499,
+      "sessions": 4,
+      "session_ids": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    "understand": {
+      "samples": 222,
+      "sessions": 1,
+      "session_ids": [
+        0
+      ]
+    },
+    "want": {
+      "samples": 400,
+      "sessions": 5,
+      "session_ids": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "water": {
+      "samples": 443,
+      "sessions": 4,
+      "session_ids": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    "where": {
+      "samples": 94,
+      "sessions": 3,
+      "session_ids": [
+        0,
+        1,
+        2
+      ]
+    },
+    "why": {
+      "samples": 78,
+      "sessions": 3,
+      "session_ids": [
+        0,
+        1,
+        2
+      ]
+    },
+    "with": {
+      "samples": 93,
+      "sessions": 3,
+      "session_ids": [
+        0,
+        1,
+        2
+      ]
+    },
+    "yes": {
+      "samples": 239,
+      "sessions": 1,
+      "session_ids": [
+        0
+      ]
+    },
+    "you": {
+      "samples": 371,
+      "sessions": 1,
+      "session_ids": [
+        0
+      ]
+    },
+    "your": {
+      "samples": 229,
+      "sessions": 1,
+      "session_ids": [
+        0
+      ]
+    }
+  },
+  "test": {
+    "bathroom": {
+      "samples": 61,
+      "sessions": 2,
+      "session_ids": [
+        0,
+        1
+      ]
+    },
+    "hello": {
+      "samples": 78,
+      "sessions": 3,
+      "session_ids": [
+        0,
+        1,
+        2
+      ]
+    },
+    "i": {
+      "samples": 20,
+      "sessions": 2,
+      "session_ids": [
+        0,
+        1
+      ]
+    },
+    "need": {
+      "samples": 1,
+      "sessions": 1,
+      "session_ids": [
+        0
+      ]
+    },
+    "water": {
+      "samples": 31,
+      "sessions": 1,
+      "session_ids": [
+        0
+      ]
+    },
+    "where": {
+      "samples": 62,
+      "sessions": 2,
+      "session_ids": [
+        0,
+        1
+      ]
+    }
+  },
+  "totals": {
+    "train_labels": 46,
+    "train_samples": 11595,
+    "test_labels": 6,
+    "test_samples": 253
+  }
+}

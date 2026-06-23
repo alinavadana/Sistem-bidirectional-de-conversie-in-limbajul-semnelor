@@ -1,0 +1,11 @@
+fastapi>=0.110
+uvicorn[standard]>=0.27
+websockets>=12.0
+numpy>=1.24
+opencv-python>=4.9
+mediapipe>=0.10
+imageio-ffmpeg>=0.4.9
+# Optional — only needed if you add an ANTHROPIC_API_KEY for sentence
+# reformulation / the ASL chatbot. The app works fine without them.
+python-dotenv>=1.0
+anthropic>=0.30

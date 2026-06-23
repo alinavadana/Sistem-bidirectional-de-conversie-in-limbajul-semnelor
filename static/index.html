@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASL Recognition</title>
+    <link rel="stylesheet" href="/static/css/style.css?v=9">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>&#129295; ASL <span>Recognition</span></h1>
+        <div class="header-status">
+            <div id="apiBadge" class="api-badge api-off" title="Claude API neconfigurat">
+                <span class="api-dot"></span>
+                <span id="apiBadgeText">Offline</span>
+            </div>
+            <div id="statusDot" class="status-dot"></div>
+            <span id="statusText">Deconectat</span>
+        </div>
+    </header>
+
+    <!-- Tabs -->
+    <nav class="tabs">
+        <button class="tab-btn active" data-tab="tab-recog">&#127909; Recunoastere semne</button>
+        <button class="tab-btn" data-tab="tab-text2sign">&#128172; Text &rarr; Semne</button>
+        <button class="tab-btn" data-tab="tab-quiz">&#127891; Invata ASL</button>
+        <button class="tab-btn" data-tab="tab-bot">&#129302; Bot ASL</button>
+    </nav>
+
+    <!-- ===================== TAB 1: RECOGNITION ===================== -->
+    <div id="tab-recog" class="tab-panel active">
+        <div class="main">
+            <!-- Left column: Video + Controls -->
+            <div>
+                <div class="card">
+                    <h2>Camera</h2>
+                    <div class="camera-row">
+                        <div class="video-container">
+                            <video id="video" autoplay playsinline muted></video>
+                            <canvas id="handOverlay" class="hand-overlay"></canvas>
+                            <div id="teachOverlay"></div>
+                        </div>
+                        <div id="teachPreview" class="teach-preview-side" style="display:none;">
+                            <div class="teach-preview-label">
+                                <span>&#128250; <b id="teachPreviewWord"></b> in WLASL</span>
+                                <button id="btnTeachPreviewClose" class="teach-preview-close" title="Inchide videoclipul">&times;</button>
+                            </div>
+                            <video id="teachPreviewVideo" muted loop autoplay playsinline></video>
+                        </div>
+                    </div>
+                    <div id="handIndicator" class="hand-indicator missing">&#10060; Fara maini in cadru</div>
+
+                    <div class="controls">
+                        <button id="btnStart" class="btn btn-primary">&#9654; Start</button>
+                        <button id="btnStop" class="btn" disabled>&#9724; Stop</button>
+                        <button id="btnUndo" class="btn">&#10005; Undo</button>
+                        <button id="btnReset" class="btn btn-danger">&#128465; Reset</button>
+                    </div>
+
+                    <div class="slider-row">
+                        <label>Prag incredere:</label>
+                        <input type="range" id="threshold" min="5" max="95" value="35">
+                        <span class="val" id="thresholdVal">35%</span>
+                    </div>
+                </div>
+
+                <!-- Teach section -->
+                <div class="card" style="margin-top: 16px;">
+                    <h2>Predare semn nou</h2>
+                    <p class="teach-hint">
+                        Scrie un cuvant (sugestii din dictionarul WLASL cu 2000 semne).
+                        Daca exista, vei vedea un videoclip cu modul corect de a face semnul
+                        &mdash; uita-te, exerseaza, apoi apasa <b>Preda</b>.
+                    </p>
+                    <div class="teach-row">
+                        <input type="text" id="teachInput" list="wlaslWordsList"
+                               placeholder="Numele semnului (ex: doctor, water)" autocomplete="off">
+                        <datalist id="wlaslWordsList"></datalist>
+                        <button id="btnTeach" class="btn btn-primary">Preda</button>
+                    </div>
+                    <div class="teach-mode-row">
+                        <span class="teach-mode-label">Salveaza in:</span>
+                        <label class="teach-mode-opt">
+                            <input type="radio" name="teachMode" value="train" checked>
+                            <span>&#127919; Antrenare (modelul invata)</span>
+                        </label>
+                        <label class="teach-mode-opt teach-mode-test">
+                            <input type="radio" name="teachMode" value="test">
+                            <span>&#129514; Test (doar pentru evaluare)</span>
+                        </label>
+                    </div>
+                    <div id="teachStatus" class="teach-status"></div>
+                </div>
+            </div>
+
+            <!-- Right column: Predictions + Words + Sentences -->
+            <div>
+                <!-- Current prediction -->
+                <div class="card">
+                    <h2>Predictie curenta</h2>
+                    <div id="predictionBox" class="prediction-box">
+                        <span class="words-empty">Apasa Start pentru a incepe</span>
+                    </div>
+                </div>
+
+                <!-- Detected words -->
+                <div class="card" style="margin-top: 16px;">
+                    <h2>Cuvinte detectate</h2>
+                    <div id="wordsChain" class="words-chain">
+                        <span class="words-empty">Fa semne ASL in fata camerei</span>
+                    </div>
+                </div>
+
+                <!-- Sentences -->
+                <div class="card" style="margin-top: 16px;">
+                    <h2>Propozitii generate</h2>
+                    <div id="sentencesList">
+                        <div class="sentences-empty">Apasa STOP dupa ce termini semnele</div>
+                    </div>
+                </div>
+
+                <!-- Learned signs -->
+                <div class="card" style="margin-top: 16px;">
+                    <div class="card-header-row">
+                        <h2>Semne adaptate (invatate)</h2>
+                        <button id="btnExportJson" class="btn btn-mini" title="Descarca toate datele de antrenare si test ca JSON (pentru lucrare/anexa)">
+                            &#128190; Exporta JSON
+                        </button>
+                    </div>
+                    <div id="learnedStats" class="learned-stats"></div>
+                    <div id="learnedSigns" class="learned-grid">
+                        <span class="words-empty">Niciun semn invatat inca</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== TAB 2: TEXT -> SIGN ===================== -->
+    <div id="tab-text2sign" class="tab-panel">
+        <div class="main main-single">
+            <div class="card">
+                <h2>Genereaza semne din text</h2>
+                <p class="t2s-hint">
+                    Scrie o propozitie in engleza (sau apasa &#127908; ca sa o spui cu vocea)
+                    si apasa <b>Genereaza</b> &mdash; vei vedea un videoclip in care un om
+                    executa propozitia in limbajul semnelor ASL. Cuvintele sunt cautate
+                    in dictionarul WLASL (2000 semne).
+                </p>
+
+                <div class="t2s-row">
+                    <input type="text" id="t2sInput" placeholder="ex: hello how are you" autocomplete="off">
+                    <button id="btnT2sMic" class="btn btn-mic" title="Apasa si vorbeste in engleza">&#127908;</button>
+                    <button id="t2sBtn" class="btn btn-primary">Genereaza</button>
+                </div>
+
+                <div id="t2sStatus" class="t2s-status"></div>
+
+                <div id="t2sChips" class="t2s-chips"></div>
+
+                <div id="t2sVideoWrap" class="t2s-video-wrap" style="display:none;">
+                    <video id="t2sVideo" controls autoplay playsinline></video>
+                </div>
+
+                <div class="t2s-examples">
+                    <span class="t2s-examples-label">Exemple:</span>
+                    <button class="t2s-example" data-s="hello how are you">hello how are you</button>
+                    <button class="t2s-example" data-s="i love my family">i love my family</button>
+                    <button class="t2s-example" data-s="thank you very much">thank you very much</button>
+                    <button class="t2s-example" data-s="i want to drink water">i want to drink water</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== TAB 3: QUIZ / LEARN ===================== -->
+    <div id="tab-quiz" class="tab-panel">
+        <div class="main">
+            <div>
+                <div class="card">
+                    <h2>Camera</h2>
+                    <div class="video-container">
+                        <video id="quizVideo" autoplay playsinline muted></video>
+                        <canvas id="quizHandOverlay" class="hand-overlay"></canvas>
+                    </div>
+                    <div id="quizHandIndicator" class="hand-indicator missing">&#10060; Fara maini in cadru</div>
+                    <div class="controls">
+                        <button id="quizStart" class="btn btn-primary">&#9654; Porneste</button>
+                        <button id="quizStop" class="btn" disabled>&#9724; Opreste</button>
+                        <button id="quizSkip" class="btn" disabled>&rarr; Sari peste</button>
+                    </div>
+                    <p class="quiz-hint" style="font-size: 0.85rem; color: #94a3b8; margin-top: 8px;">
+                        &#127919; Quiz-ul alege random un cuvant din semnele invatate de tine si iti arata
+                        videoclipul WLASL de referinta.
+                    </p>
+                </div>
+            </div>
+            <div>
+                <div class="card">
+                    <h2>Semnul de imitat</h2>
+                    <div id="quizTarget" class="quiz-target">
+                        <div class="quiz-empty">Apasa <b>Porneste</b> pentru un semn nou</div>
+                    </div>
+                    <div id="quizPrompt" class="quiz-prompt"></div>
+                </div>
+                <div class="card" style="margin-top: 16px;">
+                    <h2>Predictie curenta</h2>
+                    <div id="quizPrediction" class="prediction-box">
+                        <span class="words-empty">Asteapta predictie...</span>
+                    </div>
+                </div>
+                <div class="card" style="margin-top: 16px;">
+                    <h2>Scor</h2>
+                    <div class="quiz-score-row">
+                        <div class="quiz-score-block ok">
+                            <span class="quiz-score-label">Corecte</span>
+                            <span id="quizScoreOk" class="quiz-score-val">0</span>
+                        </div>
+                        <div class="quiz-score-block err">
+                            <span class="quiz-score-label">Gresite</span>
+                            <span id="quizScoreErr" class="quiz-score-val">0</span>
+                        </div>
+                        <div class="quiz-score-block neutral">
+                            <span class="quiz-score-label">Streak</span>
+                            <span id="quizScoreStreak" class="quiz-score-val">0</span>
+                        </div>
+                        <div class="quiz-score-block neutral">
+                            <span class="quiz-score-label">Acuratete</span>
+                            <span id="quizScoreAcc" class="quiz-score-val">&mdash;</span>
+                        </div>
+                    </div>
+                    <div id="quizHistory" class="quiz-history"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== TAB 4: ASL CHATBOT ===================== -->
+    <div id="tab-bot" class="tab-panel">
+        <div class="main">
+            <div>
+                <div class="card">
+                    <h2>Camera</h2>
+                    <div class="video-container">
+                        <video id="botVideo" autoplay playsinline muted></video>
+                        <canvas id="botHandOverlay" class="hand-overlay"></canvas>
+                    </div>
+                    <div id="botHandIndicator" class="hand-indicator missing">&#10060; Fara maini in cadru</div>
+                    <div class="controls">
+                        <button id="botStart" class="btn btn-primary">&#9654; Porneste conversatia</button>
+                        <button id="botStop" class="btn" disabled>&#9724; Opreste</button>
+                        <button id="botSend" class="btn" disabled>&#128172; Trimite</button>
+                    </div>
+                    <div id="botCurrentWords" class="words-chain" style="margin-top:12px;">
+                        <span class="words-empty">Cuvintele tale vor aparea aici</span>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="card">
+                    <h2>Conversatie</h2>
+                    <div id="botDisabledNotice" class="bot-disabled-notice" style="display:none;">
+                        &#128274; Aceasta sectiune are nevoie de o cheie <b>ANTHROPIC_API_KEY</b>.<br>
+                        Adauga cheia in <code>.env</code> si reporneste serverul.
+                        <p class="t2s-hint" style="margin-top:8px;">
+                            Vezi <code>.env.example</code> in folderul aplicatiei.
+                        </p>
+                    </div>
+                    <div id="botChat" class="bot-chat"></div>
+                </div>
+                <div class="card" style="margin-top: 16px;">
+                    <h2>Raspunsul botului in ASL</h2>
+                    <div id="botReplyVideoWrap" class="t2s-video-wrap" style="display:none;">
+                        <video id="botReplyVideo" controls autoplay playsinline></video>
+                    </div>
+                    <div id="botReplyEmpty" class="words-empty" style="padding:14px 0;">
+                        Botul iti va raspunde cu un videoclip ASL aici.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/app.js?v=9"></script>
+</body>
+</html>
