@@ -16,7 +16,7 @@ const char* WIFI_SSID = "REȚEAUA_TA_WIFI";
 const char* WIFI_PASS = "PAROLA_TA_WIFI";
 
 
-const char* SERVER_HOST = "192.168.1.100";
+const char* SERVER_HOST = "";
 const uint16_t SERVER_PORT = 8000;
 const char* SERVER_PATH = "/ws/glove";
 
