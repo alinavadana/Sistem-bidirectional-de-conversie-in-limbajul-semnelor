@@ -24,20 +24,14 @@ const char* SERVER_PATH = "/ws/glove";
 //  PIN MAP & TUNABILE
 // ============================================================
 
-// I2C: LilyGO T7 ESP32-S3 — GPIO 8 = SDA, GPIO 9 = SCL (vezi schema KiCad).
+// I2C: LilyGO T7 ESP32-S3 — GPIO 8 = SDA, GPIO 9 = SCL.
 #define I2C_SDA 8
 #define I2C_SCL 9
 
-// Câte pachete de date trimitem pe secundă. 30 Hz e ok, dar dacă vrei
-// mai puțin trafic poți scădea la 20 sau 10.
+// Câte pachete de date trimitem pe secundă. 
 const uint16_t SAMPLE_RATE_HZ = 30;
 const uint32_t SAMPLE_PERIOD_MS = 1000UL / SAMPLE_RATE_HZ;
 
-// ESP32-S3 DevKitC-1 are un LED RGB WS2812 pe GPIO 48 (nu un LED simplu),
-// deci nu îl putem clipi cu digitalWrite. Folosim doar Serial pentru
-// feedback. Dacă vrei un LED de stare în plus, conectează unul prin
-// rezistor 330 Ω la orice GPIO liber și definește LED_PIN aici.
-// #define LED_PIN 21
 
 // ============================================================
 //  OBIECTE HARDWARE
@@ -109,8 +103,6 @@ void setup() {
     Serial.println(F("[X] ADS1115 #1 (0x48) NEDETECTAT — verifică alimentare + SDA/SCL"));
   } else {
     ads1Ok = true;
-    // Cu 3V3 max pe intrări, GAIN_ONE (±4.096V, LSB ≈ 125 µV) ne dă o
-    // rezoluție mai bună decât GAIN_TWOTHIRDS.
     ads1.setGain(GAIN_ONE);
     ads1.setDataRate(RATE_ADS1115_250SPS);
     Serial.println(F("[OK] ADS1115 #1 ready"));
