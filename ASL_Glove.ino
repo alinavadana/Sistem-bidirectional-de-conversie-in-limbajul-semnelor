@@ -154,7 +154,6 @@ void setup() {
   ws.begin(SERVER_HOST, SERVER_PORT, SERVER_PATH);
   ws.onEvent(webSocketEvent);
   ws.setReconnectInterval(2000);
-  ws.enableHeartbeat(15000, 3000, 2);
 
   Serial.println(F("[Setup] Gata. Trec în loop()."));
 }
